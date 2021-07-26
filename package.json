@@ -37,7 +37,7 @@
     "android"
   ],
   "repository": "https://github.com/gruntultra/react-native-aes-gcm-modified",
-  "author": "Soh Hak Wee <hakwee123@yahoo.com.sg> (https://github.com/gruntultra)",
+  "author": "Hak Wee",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/gruntultra/react-native-aes-gcm-modified/issues"
