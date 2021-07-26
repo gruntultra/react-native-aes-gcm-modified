@@ -13,9 +13,26 @@ npm install react-native-aes-gcm-modified
 ```js
 import AesGcmModified from "react-native-aes-gcm-modified";
 
-// ...
 
-const result = await AesGcmModified.multiply(3, 7);
+```
+### Encrypt data
+
+```ts
+function encrypt(
+  plainText: string,
+  inBinary: boolean,
+  key: string
+): Promise<EncryptedData>;
+```
+
+### Decrypt data
+
+```ts
+function decrypt(
+  base64Ciphertext: string,
+  key: string,
+  isBinary: boolean
+): Promise<string>;
 ```
 
 ## Contributing
