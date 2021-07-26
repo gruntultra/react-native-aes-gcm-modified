@@ -1,7 +1,18 @@
 import { NativeModules } from 'react-native';
 
 type AesGcmModifiedType = {
-  multiply(a: number, b: number): Promise<number>;
+  decrypt(
+    base64Ciphertext: string,
+    key: string,
+    iv: string,
+    tag: string,
+    isBinary: boolean
+  ): Promise<string>;
+  encrypt(
+    plainText: string,
+    inBinary: boolean,
+    key: string
+  ): Promise<string>;
 };
 
 const { AesGcmModified } = NativeModules;
