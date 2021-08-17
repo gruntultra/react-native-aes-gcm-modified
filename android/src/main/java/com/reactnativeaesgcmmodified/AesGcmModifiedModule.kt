@@ -6,7 +6,7 @@ import com.facebook.react.module.annotations.ReactModule
 import com.facebook.react.bridge.ReactMethod
 import com.facebook.react.bridge.Promise
 import java.security.GeneralSecurityException
-import java.util.*
+import android.util.Base64
 import javax.crypto.Cipher
 import javax.crypto.SecretKey
 import javax.crypto.spec.GCMParameterSpec
@@ -41,7 +41,7 @@ class AesGcmModifiedModule(reactContext: ReactApplicationContext) : ReactContext
       cipher.init(Cipher.ENCRYPT_MODE, secretKey)
       val iv = cipher.iv.copyOf()
       val result = cipher.doFinal(plainData)
-      return Base64.getEncoder().encode(iv + result);
+      return Base64.encode(iv + result,Base64.NO_WRAP);
     }
 
     @ReactMethod
@@ -49,8 +49,8 @@ class AesGcmModifiedModule(reactContext: ReactApplicationContext) : ReactContext
                 key: String,
                 promise: Promise) {
       try {
-        val keyData = Base64.getDecoder().decode(key)
-        val ciphertext: ByteArray = Base64.getDecoder().decode(base64CipherText)
+        val keyData = Base64.decode(key,Base64.NO_WRAP)
+        val ciphertext: ByteArray = Base64.decode(base64CipherText,Base64.NO_WRAP)
         val unsealed: ByteArray = decryptData(ciphertext, keyData)
 
         promise.resolve(String(unsealed))
@@ -69,8 +69,8 @@ class AesGcmModifiedModule(reactContext: ReactApplicationContext) : ReactContext
                 key: String,
                 promise: Promise) {
       try {
-        val keyData = Base64.getDecoder().decode(key)
-        val plainData = if (inBinary) Base64.getDecoder().decode(plainText) else plainText.toByteArray(Charsets.UTF_8)
+        val keyData = Base64.decode(key,Base64.NO_WRAP)
+        val plainData = if (inBinary) Base64.decode(plainText,Base64.NO_WRAP) else plainText.toByteArray(Charsets.UTF_8)
         val sealed = encryptData(plainData, keyData)
         promise.resolve(String(sealed))
       } catch (e: GeneralSecurityException) {
